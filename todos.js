@@ -308,12 +308,9 @@ app.get("/users/signin", (req, res) => {
   });
 });
 
-app.post("/users/signin", [
-  body("username")
-  .trim()
-  ],
+app.post("/users/signin",
   catchError(async (req, res) => {
-    let username = req.body.username;
+    let username = req.body.username.trim();
     let password = req.body.password;
     if (!await res.locals.store.validateCredentials(username, password)) {
       req.flash("info", "Invalid credentials.");
